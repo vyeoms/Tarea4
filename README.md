@@ -109,4 +109,20 @@ Se utiliza el método `welch` del módulo `scipy.signal` para obtener la densida
 
 Para la demodulación y decodificación se utilizó el [producto interno](https://mathworld.wolfram.com/InnerProduct.html) de dos funciones. Este producto es definido por la relación:
 
-<img src="https://render.githubusercontent.com/render/math?math= \lt f,  g \gt = \int_a^b ">
+<img src="https://render.githubusercontent.com/render/math?math=\lt f,g \gt = \int_a^b f(t)g(t)dt">
+
+Se aprovecha la equivalencia entre la integral en dominio continuo y la sumatoria en dominio discreto para aplicar esta relación en nuestro caso. Ahora, si se considera el intervalo <img src="https://render.githubusercontent.com/render/math?math=[a,b]"> como un periodo de las señales, <img src="https://render.githubusercontent.com/render/math?math=f\left(t\right)"> la señal transmitida y <img src="https://render.githubusercontent.com/render/math?math=g\left(t\right)"> el "molde" (o bien la señal portadora), se tiene que:
+
+<img src="https://render.githubusercontent.com/render/math?math=f(t)g(t) = \sen^2(2\pi f_c t)">
+
+si el bit asociado a <img src="https://render.githubusercontent.com/render/math?math=f\left(t\right)"> es 1 y 
+
+<img src="https://render.githubusercontent.com/render/math?math=f(t)g(t) = -\sen^2(2\pi f_c t)">
+
+si el bit asociado a <img src="https://render.githubusercontent.com/render/math?math=f\left(t\right)"> es 0. Entonces, en el primer caso se tendría que el producto interno es mayor que 0 y en el segundo que es menor a 0, dado que en este último caso el producto interno sería la suma de un seno cuadrado cuyos valores son menores o iguales a 0. 
+
+Ahora, los valores exactos del producto interno van a diferir entre el caso de la señal modulada generada y la señal recibida, dado que esta última es ruidosa. Sin embargo, el AWGN debería tener un efecto similar sobre los periodos de seno positivos y negativos, por lo que se considera el umbral para decodificar la señal en 0, considerando que los productos internos posiblemente tendrán valores suficientemente grandes en magnitud para que se mantenga la relación antes descrita con la adición de los niveles mencionados de ruido blanco. Entonces, se obtiene la gráfica de BER en función del SNR:
+
+![BERvsSNR](img/BERvsSNR.png)
+
+Se ve que el BER se mantiene en 0 para los niveles de ruido solicitados, por lo que se verifica la validez del umbral de decodificación seleccionado.
