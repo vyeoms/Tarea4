@@ -105,6 +105,8 @@ Se utiliza el método `welch` del módulo `scipy.signal` para obtener la densida
 
 ![powerSNR3](img/powerSNR3.png)
 
+Estas gráficas se pueden interpretar por medio de los armónicos de la señal. Se puede notar que después de pasar por el canal ruidoso, solo "sobrevive" el armónico en 5 kHz, que corresponde a la frecuencia fundamental de la onda portadora. Se pierde el resto de "picos", dado que estos corresponden a armónicos producidos por la concatenación de diferentes ondas sinusoidales (que producen cambios muy rápidos entre un seno y otro), los cuales se pierden cuando se añade mucho AWGN.
+
 ## Inicisos 5 y 6: Demodulación y decodificación de la señal recibida, con conteo de BER y su graficación
 
 Para la demodulación y decodificación se utilizó el [producto interno](https://mathworld.wolfram.com/InnerProduct.html) de dos funciones. Este producto es definido por la relación:
